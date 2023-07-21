@@ -1,0 +1,35 @@
+{
+  "dependencies": {
+    "@popperjs/core": "^2.11.6",
+    "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.0",
+    "bootstrap": "^5.2.3",
+    "configparser": "^0.3.9",
+    "connect-busboy": "^1.0.0",
+    "cross-env": "^7.0.3",
+    "crypto": "^1.0.1",
+    "datatables": "^1.10.18",
+    "datatables.net-bs4": "^1.11.3",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "font-awesome": "^4.7.0",
+    "jest": "^29.5.0",
+    "jquery": "^3.6.0",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.0",
+    "md.bootstrappersiandatetimepicker": "^4.2.3",
+    "mdb-ui-kit": "^6.2.0",
+    "multer": "^1.4.5-lts.1",
+    "path": "^0.12.7",
+    "pg": "^8.8.0",
+    "redis": "^4.5.1",
+    "request": "^2.88.2",
+    "supertest": "^6.3.3",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
