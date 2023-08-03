@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 module.exports = async function () {
     // Initialized app
     app = express();
-    app.RCS = {}
+    app.CC = {}
     // Config app
     app.set('view engine', 'ejs');
     app.use(bodyParser.json() );

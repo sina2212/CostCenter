@@ -5,9 +5,9 @@ async function Query(app, query, value=undefined)
 {
     try {
         if (!value)
-            return await app.RCS.Config.PostgreSQL.Client.query(query)
+            return await app.CC.Config.PostgreSQL.Client.query(query)
         else
-            return await app.RCS.Config.PostgreSQL.Client.query(query, value)
+            return await app.CC.Config.PostgreSQL.Client.query(query, value)
     } catch (err) {
         console.log(err)
     }

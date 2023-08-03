@@ -1,4 +1,13 @@
 {
+  "scripts": {
+    "dev": "nodemon server.js",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=120000 --runInBand --detectOpenHandles --forceExit",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sina2212/CostCenter.git"
+  },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
     "bcrypt": "^5.1.0",
