@@ -1,12 +1,10 @@
 const resolve = require('path').resolve;
 const query = require(resolve('./db/query'))
 
-module.exports.check_unique = async function (app, values) {
+module.exports.check_unique = async function (app, username) {
     try {
-        const query_ = `select first_name, last_name, username from childs."Users"
-            left join headers."Person" on headers."Person".id = person_id
-            where username = $1`;
-        const res = await query.Query(app, query_, [values.username]);
+        const query_ = `select username from childs."Users" where username = $1`;
+        const res = await query.Query(app, query_, [username]);
         return res.rows;
     } catch (error) {
         console.log(error);

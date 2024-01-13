@@ -32,25 +32,26 @@ module.exports = function (app) {
                 first_name: first_name,
                 last_name: last_name
             }
-            const savenewPerson = await personSchema.save_new_person(app, person_values);
-            if (savenewPerson.length>0) {
-                user_values = {
-                    username: username,
-                    password: password,
-                    person_id: savenewPerson[0].id
-                }
-                const exist_user = await userSchema.check_unique(app, user_values);
-                if (exist_user.length > 0) {
-                    return res.json({status: 'ok', message: 'کاربر وجود دارد', id: savenewPerson[0].id});
-                }
-                const new_user = await userSchema.save_new_user(app, user_values);
-                if (new_user.length == 0) {
-                    return res.json({status: 'ok', message: 'نمیتوان کاربر ایجاد کرد', id: savenewPerson[0].id});
-                }
-                return res.json({status: 'ok', message: 'شخص حقوقی با موفقیت ثبت شد', id: savenewPerson[0].id});
+            const exist_user = await userSchema.check_unique(app, username);
+            if (exist_user.length > 0) {
+                return res.json({status: 'ok', message: 'کاربر وجود دارد'});
             }
-            return res.json({status: 'error', error_code: 901, message: 'خطا'})
-
+            else{
+                const savenewPerson = await personSchema.save_new_person(app, person_values);
+                if (savenewPerson.length>0) {
+                    user_values = {
+                        username: username,
+                        password: password,
+                        person_id: savenewPerson[0].id
+                    }
+                    const new_user = await userSchema.save_new_user(app, user_values);
+                    if (new_user.length == 0) {
+                        return res.json({status: 'ok', message: 'نمیتوان کاربر ایجاد کرد', id: savenewPerson[0].id});
+                    }
+                    return res.json({status: 'ok', message: 'شخص موفقیت ثبت شد', id: savenewPerson[0].id});
+                }
+                return res.json({status: 'error', error_code: 901, message: 'خطا'})
+            }
         } catch(err) {
             console.log(err)
             return res.json({status: 'error', error_code: 901, message: 'خطایی رخ داده!'})
