@@ -1,5 +1,4 @@
 const { Client } = require('pg')
-const { createClient } = require('redis');
 
 module.exports = async function(app)
 {
@@ -7,8 +6,7 @@ module.exports = async function(app)
         !app.CC.Config.PostgreSQL.PG_PASSWORD ||  
         !app.CC.Config.PostgreSQL.PG_HOST ||
         !app.CC.Config.PostgreSQL.PG_DBNAME ||
-        !app.CC.Config.PostgreSQL.PG_PORT ||
-        !app.CC.Config.Redis.URL)
+        !app.CC.Config.PostgreSQL.PG_PORT)
             return undefined;
     try {
         // Connecting PostgreSQL
