@@ -1,6 +1,6 @@
 const { resolve } = require('path')
 
-const bank = require(resolve('./db/schema/bank'))
+const bank = require(resolve('./db/schema/general/bank'))
 
 module.exports = function (app) {
     app.get('/banks', async (req, res) => {
