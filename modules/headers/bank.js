@@ -1,5 +1,4 @@
 const { resolve } = require('path')
-
 const bank = require(resolve('./db/schema/bank'))
 
 module.exports = function (app) {
