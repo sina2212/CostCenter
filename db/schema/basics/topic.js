@@ -1,9 +1,9 @@
 const resolve = require('path').resolve;
 const query = require(resolve('./db/query'))
 
-module.exports.show_all = async function (app) {
+module.exports.show_all = async function (app, values) {
     try {
-        const res = await query.Select(app, 'basics.topics');
+        const res = await query.Select(app, 'basics.topics', ['user_id, headline_id'], [values.user_id, values.headline_id]);
         return res.rows;
     } catch (error) {
         console.log(error);
@@ -27,10 +27,8 @@ module.exports.save_new_topic = async function (app, values) {
 module.exports.edit_topic = async function (app, values) {
     try {
         const res = await query.Update(app, 'basics.topics',
-            ['name', 'headline_id'],
-            [values.name, values.headline_id],
-            ['id', 'user_id'],
-            [values.id, values.user_id]
+            ['name', 'headline_id'], [values.name, values.headline_id],
+            ['id'], [values.id]
         );
         return res.rows;
     } catch (error) {
@@ -42,8 +40,8 @@ module.exports.edit_topic = async function (app, values) {
 module.exports.delete_topic = async function (app, values) {
     try {
         const res = await query.Delete(app, 'basics.topics',
-            ['id', 'user_id'],
-            [values.id, values.user_id]
+            ['id'],
+            [values.id]
         );
         return res.rows;
     } catch (error) {

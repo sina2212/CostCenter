@@ -1,9 +1,9 @@
 const resolve = require('path').resolve;
 const query = require(resolve('./db/query'))
 
-module.exports.show_all = async function (app) {
+module.exports.show_all = async function (app, values) {
     try {
-        const res = await query.Select(app, 'basics.headlines');
+        const res = await query.Select(app, 'basics.headlines', ['user_id'], [values.user_id]);
         return res.rows;
     } catch (error) {
         console.log(error);
@@ -27,10 +27,8 @@ module.exports.save_new_headline = async function (app, values) {
 module.exports.edit_headline = async function (app, values) {
     try {
         const res = await query.Update(app, 'basics.headlines',
-            ['name'],
-            [values.name],
-            ['id', 'user_id'],
-            [values.id, values.user_id]
+            ['name'], [values.name],
+            ['id'], [values.id]
         );
         return res.rows;
     } catch (error) {
