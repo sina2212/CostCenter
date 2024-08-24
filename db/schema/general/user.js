@@ -15,8 +15,44 @@ module.exports.check_unique = async function (app, username) {
 module.exports.save_new_user = async function (app, values) {
     try {
         const res = await query.Insert(app, 'general.users',
-        ['username', 'password', 'person_id'],
-        [values.username, values.password, values.person_id]);
+        ['username', 'password', 'email', 'phone_number', 'person_id'],
+        [values.username, values.password, values.email, values.phone_number, values.person_id]);
+        return res.rows;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }   
+}
+
+module.exports.change_username = async function (app, values) {
+    try {
+        const res = await query.update(app, 'general.users',
+        ['username'], [values.username],
+        ['id'], [values.id]);
+        return res.rows;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }   
+}
+
+module.exports.change_password = async function (app, values) {
+    try {
+        const res = await query.update(app, 'general.users',
+        ['password'], [values.password],
+        ['id'], [values.id]);
+        return res.rows;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }   
+}
+
+module.exports.change_information = async function (app, values) {
+    try {
+        const res = await query.update(app, 'general.users',
+        ['email', 'phone_number'], [values.email, values.phone_number],
+        ['id'], [values.id]);
         return res.rows;
     } catch (error) {
         console.log(error);

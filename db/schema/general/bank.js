@@ -10,3 +10,13 @@ module.exports.show_all = async function (app) {
         return false;
     }
 }
+
+module.exports.save_new_bank = async function (app, values) {
+    try {
+        const res = await query.Insert(app, 'general.banks', ['name'], [values.name]);
+        return res.rows;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }   
+}

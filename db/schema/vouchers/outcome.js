@@ -16,8 +16,8 @@ module.exports.show_all = async function (app) {
 module.exports.save_new_costcenter = async function (app, values) {
     try {
         const res = await query.Insert(app, 'vouchers.outcomes',
-            ['title', 'payment', 'date', 'user_id', 'topic_id', 'bank_branch_id'],
-            [values.title, values.payment, values.date, values.user_id, values.topic_id, values.bank_branch_id]
+            ['title', 'payment', 'outcome_date', 'user_id', 'topic_id', 'account_id'],
+            [values.title, values.payment, values.outcome_date, values.user_id, values.topic_id, values.account_id]
         );
         return res.rows;
     } catch (error) {
@@ -29,8 +29,8 @@ module.exports.save_new_costcenter = async function (app, values) {
 module.exports.edit_costcenter = async function (app, values) {
     try {
         const res = await query.Update(app, 'vouchers.outcomes',
-            ['title', 'payment', 'date', 'topic_id', 'bank_branch_id'],
-            [values.title, values.payment, values.date, values.topic_id, values.bank_branch_id],
+            ['title', 'payment', 'outcome_date', 'topic_id', 'account_id'],
+            [values.title, values.payment, values.outcome_date, values.topic_id, values.account_id],
             ['id', 'user_id'],
             [values.id, values.user_id]
         );

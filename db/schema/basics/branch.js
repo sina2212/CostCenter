@@ -1,9 +1,9 @@
 const resolve = require('path').resolve;
 const query = require(resolve('./db/query'))
 
-module.exports.show_all = async function (app) {
+module.exports.show_all = async function (app, values) {
     try {
-        const res = await query.Select(app, 'basics."branches"');
+        const res = await query.Select(app, 'basics.branches', ['user_id'], [values.user_id]);
         return res.rows;
     } catch (error) {
         console.log(error);
@@ -29,8 +29,7 @@ module.exports.edit_branch = async function (app, values) {
         const res = await query.Update(app, 'basics."branches"',
             ['branch_code', 'bank_id', 'name'],
             [values.branch_code, values.bank_id, values.name],
-            ['id', 'user_id'],
-            [values.id, values.user_id]
+            ['id'], [values.id]
         );
         return res.rows;
     } catch (error) {
@@ -42,8 +41,8 @@ module.exports.edit_branch = async function (app, values) {
 module.exports.delete_branch = async function (app, values) {
     try {
         const res = await query.Delete(app, 'basics."branches"',
-            ['id', 'user_id'],
-            [values.id, values.user_id]
+            ['id'],
+            [values.id,]
         );
         return res.rows;
     } catch (error) {
