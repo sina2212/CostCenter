@@ -16,8 +16,8 @@ module.exports.show_all = async function (app) {
 module.exports.save_new_income = async function (app, values) {
     try {
         const res = await query.Insert(app, 'vouchers.incomes',
-            ['title', 'draft', 'date', 'user_id', 'topic_id', 'bank_branch_id'],
-            [values.title, values.draft, values.date, values.user_id, values.topic_id, values.bank_branch_id]
+            ['title', 'draft', 'income_date', 'user_id', 'topic_id', 'account_id'],
+            [values.title, values.draft, values.income_date, values.user_id, values.topic_id, values.account_id]
         );
         return res.rows;
     } catch (error) {
@@ -29,8 +29,8 @@ module.exports.save_new_income = async function (app, values) {
 module.exports.edit_income = async function (app, values) {
     try {
         const res = await query.Update(app, 'vouchers.incomes',
-            ['title', 'draft', 'date', 'topic_id', 'bank_branch_id'],
-            [values.title, values.draft, values.date, values.topic_id, values.bank_branch_id],
+            ['title', 'draft', 'income_date', 'topic_id', 'account_id'],
+            [values.title, values.draft, values.income_date, values.topic_id, values.account_id],
             ['id', 'user_id'],
             [values.id, values.user_id]
         );
