@@ -1,10 +1,20 @@
 const resolve = require('path').resolve;
 const query = require(resolve('./db/query'))
 
+module.exports.show_all = async function (app) {
+    try {
+        const res = await query.Select(app, 'general.users');
+        return res.rows;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
 module.exports.check_unique = async function (app, username) {
     try {
-        const query_ = `select username from general.users where username = $1`;
-        const res = await query.Query(app, query_, [username]);
+        const query_ = `select username from general.users where username = $1 or person_id = $2`;
+        const res = await query.Query(app, query_, [username, person_id]);
         return res.rows;
     } catch (error) {
         console.log(error);
@@ -13,15 +23,15 @@ module.exports.check_unique = async function (app, username) {
 }
 
 module.exports.save_new_user = async function (app, values) {
-    try {
+    //try {
         const res = await query.Insert(app, 'general.users',
-        ['username', 'password', 'email', 'phone_number', 'person_id'],
-        [values.username, values.password, values.email, values.phone_number, values.person_id]);
+        ['username', 'password', 'person_id'],
+        [values.username, values.password, values.person_id]);
         return res.rows;
-    } catch (error) {
-        console.log(error);
-        return false;
-    }   
+    //} catch (error) {
+        //console.log(error);
+        //return false;
+    //}   
 }
 
 module.exports.change_username = async function (app, values) {
