@@ -3,7 +3,17 @@ const query = require(resolve('./db/query'))
 
 module.exports.show_all = async function (app, values) {
     try {
-        const res = await query.Select(app, 'basics.topics', ['user_id, headline_id'], [values.user_id, values.headline_id]);
+        const res = await query.Select(app, 'basics.topics', ['user_id'], [values.user_id]);
+        return res.rows;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
+module.exports.show_per_heeadline = async function (app, values) {
+    try {
+        const res = await query.Select(app, 'basics.topics', ['user_id', 'headline_id'], [values.user_id, values.headline_id]);
         return res.rows;
     } catch (error) {
         console.log(error);

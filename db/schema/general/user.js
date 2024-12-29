@@ -13,8 +13,8 @@ module.exports.show_all = async function (app) {
 
 module.exports.check_unique = async function (app, username) {
     try {
-        const query_ = `select username from general.users where username = $1 or person_id = $2`;
-        const res = await query.Query(app, query_, [username, person_id]);
+        // const query_ = `select username from general.users where username = $1 or person_id = $2`;
+        const res = await query.Select(app, 'basics.bank_accounts', ['user_id', 'person_id'], [values.user_id, values.person_id], 'OR')
         return res.rows;
     } catch (error) {
         console.log(error);
@@ -23,15 +23,15 @@ module.exports.check_unique = async function (app, username) {
 }
 
 module.exports.save_new_user = async function (app, values) {
-    //try {
+    try {
         const res = await query.Insert(app, 'general.users',
         ['username', 'password', 'person_id'],
         [values.username, values.password, values.person_id]);
         return res.rows;
-    //} catch (error) {
-        //console.log(error);
-        //return false;
-    //}   
+    } catch (error) {
+        console.log(error);
+        return false;
+    }   
 }
 
 module.exports.change_username = async function (app, values) {
