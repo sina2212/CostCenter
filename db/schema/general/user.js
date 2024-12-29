@@ -11,10 +11,10 @@ module.exports.show_all = async function (app) {
     }
 }
 
-module.exports.check_unique = async function (app, username) {
+module.exports.check_unique = async function (app, values) {
     try {
         // const query_ = `select username from general.users where username = $1 or person_id = $2`;
-        const res = await query.Select(app, 'basics.bank_accounts', ['user_id', 'person_id'], [values.user_id, values.person_id], 'OR')
+        const res = await query.Select(app, 'general.users', ['username', 'person_id'], [values.username, values.person_id], 'OR')
         return res.rows;
     } catch (error) {
         console.log(error);
