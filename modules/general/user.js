@@ -51,12 +51,11 @@ module.exports = function (app) {
             }
         }
     });
-
     app.patch('/users', async(req, res)=>{
         try {
             const email = req.body.email;
             const phoneNumber = req.body.phone_number;
-            const userId = req.body.user_id;
+            const userId = req.body.id;
             if (!email || !phoneNumber || !userId) {
                 return res.json({status: 'error', error_code: 901, message: 'فیلد های مورد نظر را کامل کنید!'});
             }
@@ -65,13 +64,43 @@ module.exports = function (app) {
                 email: email,
                 phone_number: phoneNumber,
             }
-
             const change = await userSchema.change_information(app, infoValues);
             if (change.length == 0 || change == false) {
                 return res.json({status: 'error', message: 'خطایی در هنگام ثبت کاربر رخ داده', id: -1});
             }
+            else{
+                return res.json({status: 'OK', message:'ویرایش با نموفقیت انجام شد'});
+            }
         } catch (error) {
-            
+            console.log(err);
+            return res.json({status: 'error', error_code: err["code"], message: ""});
+        }
+    });
+    app.put('/users', async(req, res)=>{
+        try {
+            const username = req.body.username;
+            const passwordText = req.body.password;
+            const userId = req.body.id;
+            if (!username || !passwordText || !userId) {
+                return res.json({status: 'error', error_code: 901, message: 'فیلد های مورد نظر را کامل کنید!'});
+            }
+            const password = await bcrypt.hash(passwordText, app.CC.Config.Security.HASH_DIFFICULTY);
+            const infoValues ={
+                id: userId,
+                username: username,
+                password: password,
+            }
+            const change_username = await userSchema.change_username(app, infoValues);
+            const change_password = await userSchema.change_password(app, infoValues);
+            if (change_username.length == 0 || change_password.length == 0) {
+                return res.json({status: 'error', message: 'خطایی در هنگام ثبت کاربر رخ داده', id: -1});
+            }
+            else{
+                return res.json({status: 'OK', message:'ویرایش با نموفقیت انجام شد'});
+            }
+        } catch (error) {
+            console.log(err);
+            return res.json({status: 'error', error_code: err["code"], message: ""});
         }
     });
 }
