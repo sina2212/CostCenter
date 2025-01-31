@@ -38,5 +38,32 @@ module.exports = function (app) {
             console.log(err)
             return res.json({status: 'error', error_code: 901, message: 'خطایی رخ داده!'})
         }
+    });    
+    app.put('/persons', async (req, res) => {
+        try {
+            const first_name = req.body.first_name;
+            const last_name = req.body.last_name;
+            const user_name = req.body.user_name;
+            if (!first_name || !last_name) {
+                return res.json({status: 'error', error_code: 901, message: 'فیلد های مورد نظر را کامل کنید!'});
+            }
+            person_values = {
+                first_name: first_name,
+                last_name: last_name,
+                user_name: user_name
+            }
+            console.log(person_values);
+            
+            const change_info = await personSchema.update_person(app, person_values);
+            if (change_info.length == 0) {
+                return res.json({status: 'error', message: 'خطایی در هنگام ثبت کاربر رخ داده', id: -1});
+            }
+            else{
+                return res.json({status: 'OK', message:'ویرایش با نموفقیت انجام شد'});
+            }
+        } catch (error) {
+            console.log(error)
+            return res.json({status: 'error', error_code: 901, message: 'خطایی رخ داده!'})
+        }
     });
 }
