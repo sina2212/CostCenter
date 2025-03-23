@@ -11,6 +11,16 @@ module.exports.show_all = async function (app, values) {
     }
 }
 
+module.exports.show_per_bank = async function (app, values) {
+    try {
+        const res = await query.Select(app, 'basics.branches', ['user_id', 'bank_id'], [values.user_id, values.bank_id]);
+        return res.rows;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
 module.exports.save_new_branch = async function (app, values) {
     try {
         const res = await query.Insert(app, 'basics."branches"',
