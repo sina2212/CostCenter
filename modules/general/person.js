@@ -52,12 +52,11 @@ module.exports = function (app) {
                 last_name: last_name,
                 user_name: user_name
             }
-            console.log(person_values);
-            
             const change_info = await personSchema.update_person(app, person_values);
+            
             if (change_info.length == 0) {
-                return res.json({status: 'error', message: 'خطایی در هنگام ثبت کاربر رخ داده', id: -1});
-            }
+                return res.json({status: 'error', message: 'خطایی در هنگام ویرایشاطلاعات شخص رخ داده', id: -1});
+            }            
             else{
                 return res.json({status: 'OK', message:'ویرایش با نموفقیت انجام شد'});
             }

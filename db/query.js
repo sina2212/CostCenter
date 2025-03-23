@@ -33,6 +33,7 @@ async function Select(app, table_name, filter_field=undefined, filter_value=unde
             return await Query(app, `SELECT * FROM ${table_name} WHERE (${params}) ORDER BY ${sort_field} ${sort_asc ? 'ASC' : 'DESC'};`, filter_value)
     }
 }
+//TODO: create select query return a specefic value
 // INSERT QUERY
 async function Insert(app, table_name, fields, values) {
     var params = '';

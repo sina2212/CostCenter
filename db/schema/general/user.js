@@ -34,10 +34,10 @@ module.exports.save_new_user = async function (app, values) {
     }
 }
 
-module.exports.change_username = async function (app, values) {
+module.exports.change_information = async function (app, values) {
     try {
         const res = await query.Update(app, 'general.users',
-            ['username'], [values.username],
+            ['username', 'email', 'phone_number'], [values.username, values.email, values.phone_number],
             ['id'], [values.id]
         );
         return res.rows;
@@ -52,19 +52,6 @@ module.exports.change_password = async function (app, values) {
         const res = await query.Update(app, 'general.users',
             ['password'], [values.password],
             ['id'], [values.id]
-        );
-        return res.rows;
-    } catch (error) {
-        console.log(error);
-        return false;
-    }
-}
-
-module.exports.change_information = async function (app, values) {
-    try {
-        const res = await query.Update(app, 'general.users',
-            ['email', 'phone_number'], [values.email, values.phone_number],
-            ['id'], [values.id],
         );
         return res.rows;
     } catch (error) {

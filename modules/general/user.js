@@ -53,15 +53,17 @@ module.exports = function (app) {
     });
     app.patch('/users', async(req, res)=>{
         try {
-            const email = req.body.email;
-            const phoneNumber = req.body.phone_number;
             const userId = req.body.id;
-            if (!email || !phoneNumber || !userId) {
+            const email = req.body.email;
+            const userName = req.body.username;
+            const phoneNumber = req.body.phone_number;
+            if (!email || !phoneNumber || !userId || !userName) {
                 return res.json({status: 'error', error_code: 901, message: 'فیلد های مورد نظر را کامل کنید!'});
             }
             const infoValues ={
                 id: userId,
                 email: email,
+                username: userName,
                 phone_number: phoneNumber,
             }
             const change = await userSchema.change_information(app, infoValues);
@@ -78,21 +80,18 @@ module.exports = function (app) {
     });
     app.put('/users', async(req, res)=>{
         try {
-            const username = req.body.username;
             const passwordText = req.body.password;
             const userId = req.body.id;
-            if (!username || !passwordText || !userId) {
+            if (!passwordText || !userId) {
                 return res.json({status: 'error', error_code: 901, message: 'فیلد های مورد نظر را کامل کنید!'});
             }
             const password = await bcrypt.hash(passwordText, app.CC.Config.Security.HASH_DIFFICULTY);
             const infoValues ={
                 id: userId,
-                username: username,
                 password: password,
             }
-            const change_username = await userSchema.change_username(app, infoValues);
             const change_password = await userSchema.change_password(app, infoValues);
-            if (change_username.length == 0 || change_password.length == 0) {
+            if (change_password.length == 0) {
                 return res.json({status: 'error', message: 'خطایی در هنگام ثبت کاربر رخ داده', id: -1});
             }
             else{
